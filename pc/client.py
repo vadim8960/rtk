@@ -8,7 +8,7 @@ import threading
 import os
 import pwd
 
-os.seteuid(pwd.getpwnam(os.getlogin()).pw_uid)
+# os.seteuid(pwd.getpwnam(os.getlogin()).pw_uid)
 
 def recvall(sock, count):
     buf = b''
@@ -52,7 +52,7 @@ def video_thread():
 	TCP_PORT_VIDEO = 9000
 	sock_video = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	sock_video.connect((TCP_IP, TCP_PORT_VIDEO))
-	os.seteuid(0)
+	# os.seteuid(0)
 	print('Video start')
 	while 1:
 		# print('data sent')
@@ -67,8 +67,8 @@ def video_thread():
 		ret, binary = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)
 		print('Start draw')
 		cv2.imshow('Original', image)
-		# cv2.imshow('Bin', binary)
-		cv2.waitKey(1)
+		cv2.imshow('Bin', binary)
+		cv2.waitKey(5)
 		print('End draw')
 
 def gamepad_thread():
@@ -91,12 +91,12 @@ def gamepad_thread():
 print('Start main loop')
 
 thread1 = threading.Thread(target=video_thread, args=())
-thread2 = threading.Thread(target=gamepad_thread, args=())
+# thread2 = threading.Thread(target=gamepad_thread, args=())
 
 thread1.daemon = True
-thread2.daemon = True
+# thread2.daemon = True
 
 thread1.start()
-thread2.start()
+# thread2.start()
 thread1.join()
-thread2.join()
+# thread2.join()
