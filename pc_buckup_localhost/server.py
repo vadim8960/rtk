@@ -7,29 +7,12 @@ import numpy
 import re
 import serial
 import threading
-from queue import Queue
 
 print('Start program')
 
 port = serial.Serial("/dev/ttyUSB0", baudrate=115200)
 
-file = open('koef_pid.txt', 'r')
-kp = float(file.readline())
-ki = float(file.readline())
-kd = float(file.readline())
-file.close()
-
-def recvall(sock, count):
-    buf = b''
-    while count:
-        newbuf = sock.recv(count)
-        if not newbuf: 
-        	return None
-        buf += newbuf
-        count -= len(newbuf)
-    return buf
-
-def video_thread():
+def video_thread(): 
 	TCP_PORT_VIDEO = 9000
 	sock_video = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	sock_video.bind(('', TCP_PORT_VIDEO))
@@ -62,23 +45,25 @@ def video_thread():
 
 def gamepad_thread():
 	TCP_PORT_GAMEPAD = 9997
-	BUFFER_SIZE = 1024
+	BUFFER_SIZE = 64
 	sock_gamepad = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	sock_gamepad.bind(('', TCP_PORT_GAMEPAD))
 	sock_gamepad.listen(1)
 	conn_gamepad, addr = sock_gamepad.accept()
 	print('Gamepad connected')
 	while 1:
-		data = recvall(conn_gamepad, 15)
+		data = conn_gamepad.recv(BUFFER_SIZE)
 		if not data:
 			continue
 		result = ''
 		for elem in data:
 			result += str(int(elem))
+			print(result)
 			result += ' '
 		result += '\n'
 		print( result )
 		port.write( result.encode() )
+
 
 thread1 = threading.Thread(target=video_thread, args=())
 thread2 = threading.Thread(target=gamepad_thread, args=())
