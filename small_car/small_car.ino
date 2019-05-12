@@ -1,11 +1,13 @@
-int left_motors_dir = 5;
-int left_motors_pwr = 6;
-int right_motors_dir = 10;
-int right_motors_pwr = 11;
+#define left_motors_dir1 5
+#define left_motors_dir2 7
+#define left_motors_pwr 6
+#define right_motors_dir1 10
+#define right_motors_dir2 12
+#define right_motors_pwr 11
 
 #include <Servo.h>
 
-Servo servo;
+//Servo servo;
 
 const int count_value = 6;
 
@@ -31,28 +33,30 @@ void normalizingData() {
 }
 
 void left_motor(int speed, bool direction) {
-  analogWrite(left_motors_pwr, constrain(speed, 0, 200));
-  digitalWrite(left_motors_pwr, !direction);
-  digitalWrite(left_motors_dir, direction);
+  digitalWrite(left_motors_dir1, direction);
+  digitalWrite(left_motors_dir2, !direction);
+  analogWrite(left_motors_pwr, constrain(speed, 0, 255));
 }
 
 void right_motor(int speed, bool direction) {
-  analogWrite(right_motors_pwr, constrain(speed, 0, 200));
-  digitalWrite(right_motors_pwr, !direction);
-  digitalWrite(right_motors_dir, direction);
+  digitalWrite(right_motors_dir1, direction);
+  digitalWrite(right_motors_dir2, !direction);
+  analogWrite(right_motors_pwr, constrain(speed, 0, 255));
 }
 
 void setup() {
   Serial.begin(115200);
-  pinMode(left_motors_dir, OUTPUT);
+  pinMode(left_motors_dir1, OUTPUT);
+  pinMode(left_motors_dir2, OUTPUT);
   pinMode(left_motors_pwr, OUTPUT);
-  pinMode(right_motors_dir, OUTPUT);
+  pinMode(right_motors_dir1, OUTPUT);
+  pinMode(right_motors_dir2, OUTPUT);
   pinMode(right_motors_pwr, OUTPUT);
 
   pinMode(13, OUTPUT);
 
-  servo.attach(9);
-  servo.write(0);
+  //servo.attach(9);
+  //servo.write(0);
 
   while (true) {
     if (Serial.available() > 0) {
@@ -72,7 +76,7 @@ void loop() {
     normalizingData();
   }
   if (data[2]) {
-    servo.write(data[5]);
+//    servo.write(data[5]);
     data[5] -= 127;
     digitalWrite(13, HIGH);
 //    if(50-data[5]>0)
@@ -103,7 +107,7 @@ void loop() {
 //    analogWrite(left_motors_pwr, constrain(50 + data[5], 0, 200));
 //    analogWrite(right_motors_pwr,constrain(50 - data[5], 0, 200)); 
 
-    left_motor(constrain(70 + data[5], 0, 200), 1);
+    left_motor(constrain(70 + data[5], 0, 200), 1); //Не надо так , на регуляторе тоже нужно иметь возможность обратной 
     right_motor(constrain(70 - data[5], 0, 200), 1);
     
     delay(100);
@@ -121,6 +125,7 @@ void loop() {
 //    analogWrite(right_motors_pwr, constrain(abs(fb_power - rl_power), 0, 255));
 
     left_motor(constrain(abs(fb_power + rl_power), 0, 255), !(fb_power + rl_power > 0));
+    
     right_motor(constrain(abs(fb_power - rl_power), 0, 255), !(fb_power - rl_power > 0));
   }
 }
