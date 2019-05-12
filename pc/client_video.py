@@ -30,12 +30,6 @@ def video_thread():
 	sock_local = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	sock_local.connect((TCP_IP_LOCAL, 1924))
 
-	kp = 1.5
-	ki = 0
-	kd = 0
-	i = 0
-	error_old = 0
-
 	print('Video start')
 	while 1:
 		length = recvall(sock_video, 5)
@@ -70,7 +64,7 @@ def video_thread():
 			if (binary[410, it] == 0):
 				right += 1
 
-		error = (left - right)
+		error = (left - right) + 100
 
 		cv2.line(image, (start_left, 410), (end_left, 410), (255, 0, 0), 3)
 		cv2.line(image, (start_right, 410), (end_right, 410), (255, 0, 0), 3)
@@ -79,11 +73,7 @@ def video_thread():
 		cv2.putText(image, str(right), (480, 410), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0))
 		cv2.imshow('Original', image)
 
-		p = kp * error
-		i += (ki * error)
-		d = kd * (error - error_old)
-		u = int(p + i + d)
-		sock_local.send((str(u) + '\n').encode())
+		sock_local.send((str(error) + '\n').encode())
 
 		cv2.waitKey(1)
 

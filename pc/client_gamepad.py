@@ -84,8 +84,8 @@ def gamepad_thread():
 		if (not u_new):
 			u_new = u_last
 		print('U: ', u_new)
-		buff.append(my_map(constr(int(u_new), int(-max_value * kp), int(max_value * kp)), int(-max_value * kp), int(max_value * kp), 0, 255))
-		u_last = str(my_map(constr(int(u_new), int(-max_value * kp), int(max_value * kp)), int(-max_value * kp), int(max_value * kp), 0, 255))
+		buff.append(int(u_new))
+		u_last = u_new
 		time_elapsed = time.time() - prev
 		if (time_elapsed > 1./frame_rate):
 			prev = time.time()

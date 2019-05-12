@@ -62,7 +62,7 @@ void loop() {
   }
   if (data[2]) {
     servo.write(data[5]);
-    data[5] -= 127;
+    data[5] -= 100;
     digitalWrite(13, HIGH);
 //    if(50-data[5]>0)
 //    {
@@ -90,8 +90,8 @@ void loop() {
     
     digitalWrite(left_motors_dir, 0);
     digitalWrite(right_motors_dir, 0);
-    analogWrite(left_motors_pwr, constrain(100 + data[5], 0, 200));
-    analogWrite(right_motors_pwr,constrain(100 - data[5], 0, 200)); 
+    analogWrite(left_motors_pwr, constrain(100 + data[5] * 0.4, 0, 200));
+    analogWrite(right_motors_pwr,constrain(100 - data[5] * 0.4, 0, 200)); 
     
     delay(100);
   } 
