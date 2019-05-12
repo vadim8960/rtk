@@ -48,7 +48,7 @@ void setup() {
       parseData(input_data);
       normalizingData();
     }
-    if (data[0] == && data[1] == 127 && data[2] == 0 && data[3] == 0 && data[4] == 0) 
+    if (data[0] == 127 && data[1] == 127 && data[2] == 0 && data[3] == 0 && data[4] == 0) 
       break;
   }
   
@@ -90,8 +90,8 @@ void loop() {
     
     digitalWrite(left_motors_dir, 0);
     digitalWrite(right_motors_dir, 0);
-    analogWrite(left_motors_pwr, constrain(100 + data[5], 0, 200));
-    analogWrite(right_motors_pwr,constrain(100 - data[5], 0, 200)); 
+    analogWrite(left_motors_pwr, constrain(75 + data[5], 0, 200));
+    analogWrite(right_motors_pwr,constrain(75 - data[5], 0, 200)); 
     
     delay(100);
   } 

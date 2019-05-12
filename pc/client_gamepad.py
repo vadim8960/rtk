@@ -63,7 +63,7 @@ def gamepad_thread():
 	TCP_IP = '192.168.0.20'
 	TCP_IP_LOCAL = '127.0.0.1'
 	TCP_PORT_GAMEPAD = 9997
-	kp = 1.5
+	kp = 0.01
 	max_value = 100
 	sock_gamepad = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	sock_gamepad.connect((TCP_IP, TCP_PORT_GAMEPAD))
@@ -84,8 +84,8 @@ def gamepad_thread():
 		if (not u_new):
 			u_new = u_last
 		print('U: ', u_new)
-		buff.append(my_map(constr(int(u_new), int(-max_value * kp), int(max_value * kp)), int(-max_value * kp), int(max_value * kp), 0, 255))
-		u_last = str(my_map(constr(int(u_new), int(-max_value * kp), int(max_value * kp)), int(-max_value * kp), int(max_value * kp), 0, 255))
+		buff.append(int(u_new))
+		u_last = u_new
 		time_elapsed = time.time() - prev
 		if (time_elapsed > 1./frame_rate):
 			prev = time.time()

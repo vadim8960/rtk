@@ -77,7 +77,7 @@ void loop() {
   }
   if (data[2]) {
 //    servo.write(data[5]);
-    data[5] -= 127;
+    data[5] -= 100;
     digitalWrite(13, HIGH);
 //    if(50-data[5]>0)
 //    {
@@ -107,10 +107,10 @@ void loop() {
 //    analogWrite(left_motors_pwr, constrain(50 + data[5], 0, 200));
 //    analogWrite(right_motors_pwr,constrain(50 - data[5], 0, 200)); 
 
-    left_motor(constrain(70 + data[5], 0, 200), 1); //Не надо так , на регуляторе тоже нужно иметь возможность обратной 
-    right_motor(constrain(70 - data[5], 0, 200), 1);
+    left_motor(constrain(150 - data[5] * 0.6, 0, 255), 0); //Не надо так , на регуляторе тоже нужно иметь возможность обратной 
+    right_motor(constrain(150 + data[5] * 0.6, 0, 255), 0);
     
-    delay(100);
+    delay(50);
   } 
   
   if(!data[2]) {
