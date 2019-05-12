@@ -30,6 +30,18 @@ void normalizingData() {
       data[iter] = 127;
 }
 
+void left_motor(int speed, bool direction) {
+  analogWrite(left_motors_pwr, constrain(speed, 0, 200));
+  digitalWrite(left_motors_pwr, !direction);
+  digitalWrite(left_motors_dir, direction);
+}
+
+void right_motor(int speed, bool direction) {
+  analogWrite(right_motors_pwr, constrain(speed, 0, 200));
+  digitalWrite(right_motors_pwr, !direction);
+  digitalWrite(right_motors_dir, direction);
+}
+
 void setup() {
   Serial.begin(115200);
   pinMode(left_motors_dir, OUTPUT);
@@ -48,10 +60,9 @@ void setup() {
       parseData(input_data);
       normalizingData();
     }
-    if (data[0] == && data[1] == 127 && data[2] == 0 && data[3] == 0 && data[4] == 0) 
+    if (data[0] == 127 && data[1] == 127 && data[2] == 0 && data[3] == 0 && data[4] == 0) 
       break;
   }
-  
 }
 
 void loop() {
@@ -86,12 +97,14 @@ void loop() {
 //      //analogWrite(right_motors_pwr,abs(0));
 //      analogWrite(right_motors_pwr, constrain(abs(50 + data[5]), 0, 200));
 //    }
-
     
-    digitalWrite(left_motors_dir, 0);
-    digitalWrite(right_motors_dir, 0);
-    analogWrite(left_motors_pwr, constrain(100 + data[5], 0, 200));
-    analogWrite(right_motors_pwr,constrain(100 - data[5], 0, 200)); 
+//    digitalWrite(left_motors_dir, 0);
+//    digitalWrite(right_motors_dir, 0);
+//    analogWrite(left_motors_pwr, constrain(50 + data[5], 0, 200));
+//    analogWrite(right_motors_pwr,constrain(50 - data[5], 0, 200)); 
+
+    left_motor(constrain(70 + data[5], 0, 200), 1);
+    right_motor(constrain(70 - data[5], 0, 200), 1);
     
     delay(100);
   } 
@@ -101,10 +114,13 @@ void loop() {
     int fb_power = data[4] - data[3];             // forward backward power
     int rl_power = map(data[0], 0, 255, -255, 255); // right left power
 
-    digitalWrite(left_motors_dir, !(fb_power + rl_power > 0));
-    digitalWrite(right_motors_dir, !(fb_power - rl_power > 0));
-    
-    analogWrite(left_motors_pwr, constrain(abs(fb_power + rl_power), 0, 255));
-    analogWrite(right_motors_pwr, constrain(abs(fb_power - rl_power), 0, 255));
+//    digitalWrite(left_motors_dir, !(fb_power + rl_power > 0));
+//    digitalWrite(right_motors_dir, !(fb_power - rl_power > 0));
+//    
+//    analogWrite(left_motors_pwr, constrain(abs(fb_power + rl_power), 0, 255));
+//    analogWrite(right_motors_pwr, constrain(abs(fb_power - rl_power), 0, 255));
+
+    left_motor(constrain(abs(fb_power + rl_power), 0, 255), !(fb_power + rl_power > 0));
+    right_motor(constrain(abs(fb_power - rl_power), 0, 255), !(fb_power - rl_power > 0));
   }
 }
