@@ -5,6 +5,7 @@ git clone git@github.com:vadim8960/rtk.git
 git checkout develop
 
 0. Подключиться к wifi сети машинки 
+
    ssid: KubSURobot
    
    pass: allhailklab
