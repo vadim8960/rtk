@@ -4,6 +4,8 @@ git clone git@github.com:vadim8960/rtk.git
 
 git checkout develop
 
+-------------------------------------------------
+
 Необходимые библиотеки для работы софта:
 
 sudo apt-get install xboxdrv
@@ -11,6 +13,8 @@ sudo apt-get install xboxdrv
 sudo apt-get python3
 
 sudo apt-get install libopencv-dev python3-opencv
+
+-------------------------------------------------
 
 Инструкция использования:
 
@@ -31,6 +35,8 @@ sudo apt-get install libopencv-dev python3-opencv
 3. ./run_client.sh (в директории rtk/pc)
 
 P.S. Для работы необходимо подключить джостик к компьютеру
+
+-------------------------------------------------
 
 Управление:
 
