@@ -4,6 +4,16 @@ git clone git@github.com:vadim8960/rtk.git
 
 git checkout develop
 
+Необходимые библиотеки для работы софта:
+
+sudo apt-get install xboxdrv
+
+sudo apt-get python3
+
+sudo apt-get install libopencv-dev python3-opencv
+
+Инструкция использования:
+
 0. Подключиться к wifi сети машинки 
 
    ssid: KubSURobot
@@ -31,3 +41,4 @@ L2 - газ назад
 X - автономная езда по линии (удержание)
 
 Левый джостик - повороты
+
