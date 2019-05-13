@@ -11,6 +11,8 @@ git checkout develop
    pass: allhailklab
 
 1. ssh pi@192.168.0.20
+
+  pass: allhailklab
 2. python3 server.py
 
 Открываем другую консоль
