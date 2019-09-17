@@ -1,0 +1,10 @@
+prefix=/usr
+libdir=${prefix}/lib/atlas-base/atlas
+includedir=${prefix}/include
+Name: atlas-lapack
+Description: Automatically Tuned Linear Algebra Software, LAPACK
+Version: 3.10.3
+URL: http://math-atlas.sourceforge.net/
+Libs: -L${libdir} -llapack
+Libs.private: -L${libdir} -latlas -lm
+Cflags: -I${includedir}
